@@ -19,6 +19,7 @@ router.use("/api", require("./api"))
 
 router.all("*", (req, res, next) =>
 {
+    res.code = 404
     next(new Error(`Cannot ${req.method} ${req.url}`))
 })
 router.use(require("../controllers/middleware/errorHandler"))
