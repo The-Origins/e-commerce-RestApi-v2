@@ -64,7 +64,8 @@ const userSchema = new mongoose.Schema(
         },
         email:{
             type:String,
-            lowercase:true
+            lowercase:true,
+            unique:true
         },
         phone:{
             type:{
@@ -112,6 +113,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", function(next)
 {
+    //update cart item total and cart total before saving any changes
     let total = 0
     if(this.cart.items)
     {
@@ -123,6 +125,7 @@ userSchema.pre("save", function(next)
         }
     }
     this.cart.total = total
+    //updated the updatedAt date on save
     this.updatedAt = Date.now()
     next()
 })
