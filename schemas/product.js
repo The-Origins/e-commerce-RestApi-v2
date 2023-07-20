@@ -243,7 +243,7 @@ productSchema.statics.findBySearch = async function(search, maxPrice, minPrice, 
     {
         //product properties are attributes of the product e.g -> "color:black", "weight:1.0kgs", "cpu:i9-12900K". NOTE: properties are not the same as the description
         //this block filters out products of which their properties don't match the properties passed in the args
-        //NOTE: properties is an array of objects -> [{},{}]
+        //NOTE: properties is an array of objects with name and value fields-> [{name:"", value:""},{name:"", value:""}]
         results = results.filter((result) =>
         {
             //loop through the properties passed in the args
@@ -253,6 +253,8 @@ productSchema.statics.findBySearch = async function(search, maxPrice, minPrice, 
                 for(let productProperty in result.properties)
                 {
                     //if the product propety.name === passed in property.name then only send if back if their values are the same
+                    //if the product does not have that property it will not be returned -> [{name:"cpu", value:"i9-12900K"}] if the product does not have a cpu property it wont be returned
+                    //if you want to return the product if it doesn't have the property then uncomment the 'else' block below
                     if(String(result.properties[productProperty].name) === String(properties[property].name))
                     {
                         //if it does then only send it if the values are the same 
@@ -261,13 +263,10 @@ productSchema.statics.findBySearch = async function(search, maxPrice, minPrice, 
                             return true
                         }
                     }
-                    //if not return it anyway
-                    // this is because this product MIGHT not have this property
-                    //Even if it does it will be eventually be removed once the property.name matches with the name of the property that was passed in the args
-                    else
-                    {
-                        return true
-                    }
+                    // else
+                    // {
+                    //     return true
+                    // }    
                 }
             }
         })
