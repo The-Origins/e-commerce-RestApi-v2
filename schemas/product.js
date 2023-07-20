@@ -255,6 +255,7 @@ productSchema.statics.findBySearch = async function(search, maxPrice, minPrice, 
                     //if the product propety.name === passed in property.name then only send if back if their values are the same
                     //if the product does not have that property it will not be returned -> [{name:"cpu", value:"i9-12900K"}] if the product does not have a cpu property it wont be returned
                     //if you want to return the product if it doesn't have the property then uncomment the 'else' block below
+                    //I need to access both the name and value and that's why i explicitly named them in the propertySchema above, without the explicit name and value i wouldn't be able to compare the names
                     if(String(result.properties[productProperty].name) === String(properties[property].name))
                     {
                         //if it does then only send it if the values are the same 
