@@ -8,6 +8,7 @@ const updateUser = (req,res,next) =>
     {
         if(!user)
         { 
+            res.code = 400
             return next(new Error(`No user with id:${req.params.id}`))
         }
         for(let property in req.body)
