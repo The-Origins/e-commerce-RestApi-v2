@@ -14,6 +14,7 @@ const getResults = async (req, res, next) =>
     })
     if(!queries.search)
     {
+        res.code = 400
         return next(new Error("Search required"))
     }
     try 
@@ -21,6 +22,7 @@ const getResults = async (req, res, next) =>
         const results = await Product.findBySearch(String(queries.search).replace("+", " ").toLowerCase(), queries.max, queries.min, queries.brand, properties)
         if(!results.length)
         {
+            res.code = 400
             return next(new Error(`No results for search '${queries.search}'`))
         }
         if(queries.limit)
