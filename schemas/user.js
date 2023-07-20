@@ -74,7 +74,8 @@ const userSchema = new mongoose.Schema(
                 },
                 number:{
                     type:Number,
-                    reqired:true
+                    reqired:true,
+                    unique:true
                 }
             }
         },
