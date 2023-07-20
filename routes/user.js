@@ -9,6 +9,7 @@ router.get("/login-success", require("../controllers/login/success"))
 router.get("/login-faliure", require("../controllers/login/faliure"))
 router.get("/logged-out", require("../controllers/logout/loggedOut"))
 router.patch("/update", require("../controllers/middleware/isAuthenticated"), require("../controllers/user/updateUser"))
+router.patch("/update/password", require("../controllers/middleware/isAuthenticated"), require("../controllers/user/updateUserPassword"))
 router.delete("/delete", require("../controllers/middleware/isAuthenticated"), require("../controllers/user/deleteUser"))
 router.delete("/logout", require("../controllers/middleware/isAuthenticated"), require("../controllers/logout/logout"))
 
