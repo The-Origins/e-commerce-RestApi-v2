@@ -8,6 +8,7 @@ const getUser = (req, res, next) =>
     }
     else
     {
+        res.code = 401
         next(new Error("No user"))
     }
 }
