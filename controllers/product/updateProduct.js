@@ -8,6 +8,7 @@ const updateProduct = (req,res,next) =>
     {
         if(!product)
         { 
+            res.code = 400
             return next(new Error(`No product with id:${req.params.id}`))
         }
         for(let property in req.body)
