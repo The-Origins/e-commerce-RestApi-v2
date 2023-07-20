@@ -8,7 +8,7 @@ const updateCart = (req, res, next) =>
         let item = req.body.item
         if(item.product&&item.quantity)
         {
-            if(req.user)
+            if(req.isAuthenticated())
             {
                 for(let i in req.user.cart.items)
                 {

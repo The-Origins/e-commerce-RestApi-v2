@@ -6,7 +6,7 @@ const deleteCart = (req, res, next) =>
     {
         if(item.product)
         {
-            if(req.user)
+            if(req.isAuthenticated())
             {
                 for(let i in req.user.cart.items)
                 {

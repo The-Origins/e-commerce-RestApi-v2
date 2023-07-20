@@ -1,5 +1,6 @@
 const router = require("express").Router()
 
+router.use(require("../controllers/middleware/isAdmin"))
 
 router.get("/:id", require("../controllers/product/getProduct"))
 router.post("/add", require("../controllers/product/addProduct"))

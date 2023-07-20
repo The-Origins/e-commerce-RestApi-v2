@@ -7,7 +7,7 @@ const addCartItem = (req, res, next) =>
     {
         if(item.product&&item.quantity)
         {
-            if(req.user)
+            if(req.isAuthenticated())
             {
                 req.user.cart.items = [...req.user.cart.items, item]
                 req.user.save()

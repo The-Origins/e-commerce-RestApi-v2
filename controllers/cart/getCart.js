@@ -1,6 +1,6 @@
 const getCart = (req, res, next) =>
 {
-    if(req.user)
+    if(req.isAuthenticated())
     {
         req.user.save()
         .then((user) =>
