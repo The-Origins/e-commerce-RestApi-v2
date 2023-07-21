@@ -1,5 +1,6 @@
 const Product = require("../../config/database").models.Product
 
+//updates product 
 const updateProduct = (req,res,next) =>
 {
     let edits = Object.keys(req.body).join(", ")
@@ -16,7 +17,11 @@ const updateProduct = (req,res,next) =>
             product[property] = req.body[property]
         }
         product.save()
-        res.status(200).json({success:true, data:product, message:`edited '${edits}' in ${product.name}`})
+        .then((p) =>
+        {
+            res.status(200).json({success:true, data:p, message:`edited '${edits}' in ${p.name}`})
+        })
+        .catch((err) => next(err))
     })
     .catch((err) => next(err))
 }

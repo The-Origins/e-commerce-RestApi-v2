@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const productSchema = require("../schemas/product")
 
+//Schema for the users location(s) incase they save multiple
 const locationSchema = new mongoose.Schema(
     {
         country:
@@ -26,6 +27,8 @@ const locationSchema = new mongoose.Schema(
     }
 )
 
+//Schema for each item in the users cart
+//The createdAt property was getting changed at each modification so I made it immutable
 const cartItemSchema = new mongoose.Schema(
     {
         product:productSchema,
@@ -34,6 +37,7 @@ const cartItemSchema = new mongoose.Schema(
             required:true,
             default:1
         },
+        variant:String,
         total:Number,
         createdAt:{
             type:Date,
@@ -47,6 +51,7 @@ const cartItemSchema = new mongoose.Schema(
     }
 )
 
+//Schema for the user
 const userSchema = new mongoose.Schema(
     {
         name:{
@@ -94,6 +99,10 @@ const userSchema = new mongoose.Schema(
             type:Boolean,
             default:true
         },
+        verified:{
+            type:Boolean,
+            default:true
+        },
         pfp:{
             type:String,
             default:"https://tchblg.de/wp-content/uploads/user-avatar.png"
@@ -110,6 +119,7 @@ const userSchema = new mongoose.Schema(
         timestamps:true
     }
 )
+
 
 userSchema.pre("save", function(next)
 {

@@ -1,5 +1,6 @@
 const Product = require("../../config/database").models.Product
 
+//Adds product to database
 const addProduct = (req, res, next) =>
 {
     Product.create({...req.body})

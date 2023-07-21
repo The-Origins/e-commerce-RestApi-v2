@@ -1,13 +1,19 @@
 const mongoose = require("mongoose")
 
+//product review schema
 const reviewSchema = new mongoose.Schema({
     userName:String,
     userImage:String,
+    verified:{
+        type:Boolean,
+        default:true
+    },
     review:String
 },
 {timestamps:true}
 )
 
+//Product property schema e.g {name:"cpu", value:"i9-12900K"}
 const propertySchema  = new mongoose.Schema(
     {
         name:{
@@ -23,6 +29,7 @@ const propertySchema  = new mongoose.Schema(
     }
 )
 
+//Product schema
 const productSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -56,6 +63,7 @@ const productSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
+    state:String,
     images:[String],
     description:{
         type:String,
@@ -64,7 +72,8 @@ const productSchema = new mongoose.Schema({
     rating:{
         score:{
             type:Number,
-            default:0
+            default:0,
+            max:5
         },
         votes:{
             type:Number,
@@ -86,10 +95,13 @@ const productSchema = new mongoose.Schema({
     }
 }, {timestamps:true})
 
+//This runs before the product saves onto the database
 productSchema.pre("save", function(next)
 {
     //updated the product rating based on the ratings array
     let total = 0.00
+
+    //checks if there are ratings in the ratings array
     if(this.ratings.length > 1)
     {
         for(let rating in this.ratings)
@@ -97,8 +109,14 @@ productSchema.pre("save", function(next)
             total += this.ratings[rating]
         }
     }
+    //sets the rating.votes of the product to the ratings.length
     this.rating.votes = this.ratings.length
+
+    //sets the rating score to the average of all the ratings in the ratings array
     this.rating.score = total?total/this.ratings.length:this.ratings.length ? this.ratings[0]:0
+
+    //update product state
+    this.state = this.stock > 10 ? "In stock" : this.stock ? `${this.stock} left in stock` : `Out of stock`
     next()
 })
 

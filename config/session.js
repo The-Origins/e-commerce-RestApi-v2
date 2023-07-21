@@ -2,8 +2,10 @@ require("dotenv").config()
 const mongoose = require("mongoose")
 const MongoStore = require("connect-mongo")
 
+//session lifespan (in s)
 const sessionDuration = 24*60*60
 
+//session config
 const session = {
     secret:process.env.SESSION_SECRET,
     resave:false,
@@ -17,6 +19,7 @@ const session = {
         },
     ),
     cookie:{
+        //cookie lifespan (in ms)
         maxAge:sessionDuration * 1000
     }
 }

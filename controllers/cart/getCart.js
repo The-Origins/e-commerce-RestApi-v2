@@ -1,7 +1,9 @@
 const getCart = (req, res, next) =>
 {
+    //check if the user is logged in
     if(req.isAuthenticated())
     {
+        //update the user before returning it
         req.user.save()
         .then((user) =>
         {
@@ -11,6 +13,7 @@ const getCart = (req, res, next) =>
     }
     else
     {
+        //return the sessions cart
         res.json({success:true, data:req.session.cart, message:`fetched session's cart`})
     }
 }
